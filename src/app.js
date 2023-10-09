@@ -1,12 +1,16 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments } from './api';
+import { getUserFragments, postUserFragments } from './api';
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
+  const postSection = document.querySelector('#postSection');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
+  const newFragmentBox = document.querySelector('#newFragmentBox');
+  const submitBtn = document.querySelector('#submitBtn');
+  const errorMsg = document.querySelector('#errorMsg')
   
 
   // Wire up event handlers to deal with login and logout.
@@ -19,6 +23,16 @@ async function init() {
     // Sign-out of the Amazon Cognito Hosted UI (requires redirects), see:
     // https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js/#sign-out
     Auth.signOut();
+  };
+
+  submitBtn.onclick = () => {
+    if(newFragmentBox.value == ""){
+      errorMsg.innerHTML = "Error : Text data for the fragment is required"
+    }
+    else{
+      errorMsg.innerHTML = ""
+      postUserFragments(user,newFragmentBox.value)
+    }
   };
 
   // See if we're signed in (i.e., we'll have a `user` object)
@@ -34,7 +48,7 @@ async function init() {
 
   // Update the UI to welcome the user
   userSection.hidden = false;
-
+  postSection.hidden = false;
   // Show the user's username
   userSection.querySelector('.username').innerText = user.username;
 

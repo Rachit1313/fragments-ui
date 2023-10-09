@@ -21,6 +21,27 @@ export async function getUserFragments(user) {
     const data = await res.json();
     console.log('Got user fragments data', { data });
   } catch (err) {
-    console.error('Unable to call GET /v1/fragment', { err });
+    console.error('Unable to call POST /v1/fragment', { err });
   }
+}
+  export async function postUserFragments(user,value) {
+    console.log('Posting user fragments data...');
+    try {
+      const res = await fetch(`${apiUrl}/v1/fragments`, {
+        // Generate headers with the proper Authorization bearer token to pass
+        headers: {
+          ...user.authorizationHeaders(),
+          "Content-Type": "text/plain"
+           },
+        method: 'POST',
+        body: value
+      });
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+      const data = await res.json();
+      console.log('Posted user fragments data', { data });
+    } catch (err) {
+      console.error('Unable to call POST /v1/fragment', { err });
+    }
 }
