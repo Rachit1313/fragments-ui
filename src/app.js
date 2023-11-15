@@ -11,6 +11,7 @@ async function init() {
   const newFragmentBox = document.querySelector('#newFragmentBox');
   const submitBtn = document.querySelector('#submitBtn');
   const errorMsg = document.querySelector('#errorMsg')
+  const fragmentType = document.querySelector('#type');
   
 
   // Wire up event handlers to deal with login and logout.
@@ -27,11 +28,11 @@ async function init() {
 
   submitBtn.onclick = () => {
     if(newFragmentBox.value == ""){
-      errorMsg.innerHTML = "Error : Text data for the fragment is required"
+      errorMsg.innerHTML = "Error : data for the fragment is required"
     }
     else{
       errorMsg.innerHTML = ""
-      postUserFragments(user,newFragmentBox.value)
+      postUserFragments(user,newFragmentBox.value,fragmentType.value)
     }
   };
 

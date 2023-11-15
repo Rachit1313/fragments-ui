@@ -16,6 +16,13 @@
     </section>
     <section hidden id="postSection">
       <h2>Add New Fragment</h2>
+      <label for="type">Select your fragment type:</label>
+      <select name="type" id="type"> 
+        <option value="text/plain">text/plain</option> 
+        <option value="text/markdown">text/markdown</option> 
+        <option value="text/html">text/html</option> 
+        <option value="application/json">application/json</option> 
+      </select>
       <label for="newFragmentBox">Enter your fragment data :</label>
       <input type="text" id="newFragmentBox">
       <p id="errorMsg"></p>
