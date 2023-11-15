@@ -12,6 +12,7 @@ async function init() {
   const submitBtn = document.querySelector('#submitBtn');
   const errorMsg = document.querySelector('#errorMsg')
   const fragmentType = document.querySelector('#type');
+  const existingFragmentsBox = document.querySelector('#existingFragments')
   
 
   // Wire up event handlers to deal with login and logout.
@@ -33,8 +34,32 @@ async function init() {
     else{
       errorMsg.innerHTML = ""
       postUserFragments(user,newFragmentBox.value,fragmentType.value)
+      displayUserFragments();
     }
   };
+
+  function displayUserFragments() {  
+    getUserFragments(user)
+      .then((fragments) => {
+        // Assuming fragments is an array, you can process it and update the HTML
+        existingFragmentsBox.innerHTML = createHTMLFromFragments(fragments);
+      })
+      .catch((error) => {
+        console.error('Error fetching user fragments:', error);
+      });
+  }
+
+  function createHTMLFromFragments(fragments) {
+    // Implement your logic to create HTML from the fragments array
+    // For example, you could use a loop to create a list
+    console.log(fragments)
+    const fragmentList = fragments.map(fragment => `<p> <li> Id: ${fragment.id} <br> Owner Id : ${fragment.ownerId} <br> Size: ${fragment.size} <br> Type : ${fragment.type} <br> Updated : ${fragment.updated} <br> Created : ${fragment.created}
+    </li></p>`).join('');
+    return `<ul>${fragmentList}</ul>`;
+
+  }
+
+
 
   // See if we're signed in (i.e., we'll have a `user` object)
   const user = await getUser();
@@ -43,10 +68,10 @@ async function init() {
     logoutBtn.disabled = true;
     return;
   }
-  getUserFragments(user);
+
   // Log the user info for debugging purposes
   console.log({ user });
-
+  displayUserFragments();
   // Update the UI to welcome the user
   userSection.hidden = false;
   postSection.hidden = false;
