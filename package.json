@@ -3,7 +3,6 @@
   "private": "true",
   "version": "0.0.1",
   "description": "Fragments UI testing web app",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel src/index.html",
@@ -28,6 +27,7 @@
     "querystring-es3": "^0.2.1"
   },
   "dependencies": {
-    "aws-amplify": "^5.3.11"
+    "aws-amplify": "^5.3.11",
+    "nginx": "^1.0.8"
   }
 }
