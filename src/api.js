@@ -46,3 +46,42 @@ export async function getUserFragments(user) {
       console.error('Unable to call POST /v1/fragment', { err });
     }
 }
+
+export async function getFragmentDataByID(user, id) {
+  try {
+    if (id != "") {
+      console.log(`Requesting user fragment data by ID...`);
+      console.log(`Fetching ${apiUrl}/v1/fragments/${id}`);
+      const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+        headers: user.authorizationHeaders(),
+      });
+
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+
+      const type = res.headers.get("Content-Type");
+      if (type.includes("text")) {
+        const data = await res.text();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        document.getElementById("returnedData").innerHTML = data;
+      } else if (type.startsWith("image")) {
+        const data = await res.blob();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        var image = document.querySelector('img');
+        // see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+        var objectURL = URL.createObjectURL(data);
+        image.src = objectURL;
+      } else if (type.includes("json")) {
+        const data = await res.json();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        document.getElementById("returnedData").innerHTML = data;
+      } 
+    } else {
+      document.getElementById("returnedData").textContent = "Error: ID required";
+      console.log("Error: ID required");
+    }
+  } catch (err) {
+    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
+  }
+}

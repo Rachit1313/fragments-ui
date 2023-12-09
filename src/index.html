@@ -19,16 +19,32 @@
     <section hidden id="postSection">
       <h2>Add New Fragment</h2>
       <label for="type">Select your fragment type:</label>
-      <select name="type" id="type"> 
+      <select name="type" id="type" onchange="toggleFragmentInputs()"> 
         <option value="text/plain">text/plain</option> 
         <option value="text/markdown">text/markdown</option> 
         <option value="text/html">text/html</option> 
         <option value="application/json">application/json</option> 
+        <option value="image/png">image/png</option> 
+        <option value="image/jpeg">image/jpeg</option> 
+        <option value="image/webp">image/webp</option> 
+        <option value="image/gif">image/gif</option> 
       </select>
       <label for="newFragmentBox">Enter your fragment data :</label>
       <input type="text" id="newFragmentBox">
       <p id="errorMsg"></p>
-      <button type="submit" id="submitBtn">Submit</button>
+      <form id="imageForm" enctype="multipart/form-data">
+        <input type="file" name="image" id="fileInput" accept="image/*">
+      </form>
+      <button type="submit" id="submitBtn">Submit</button> 
+    </section>
+    <section hidden id="viewFragmentSection">
+      <h2>View Fragment</h2>
+      <label for="viewFragment">Enter your fragment id :</label>
+      <input type="text" id="fragmentId"> 
+      <div id="returnedData"></div>
+      <img id="image">
+      <br>
+      <button type="submit" id="getFragmentDataBtn">Get Fragment Data</button>
     </section>
   </body>
 </html>
