@@ -1,7 +1,7 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments, postUserFragments, getFragmentDataByID } from './api';
+import { getUserFragments, postUserFragments, getFragmentDataByID, deleteFragmentByID } from './api';
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
@@ -13,10 +13,9 @@ async function init() {
   const errorMsg = document.querySelector('#errorMsg')
   const fragmentType = document.querySelector('#type');
   const existingFragmentsBox = document.querySelector('#existingFragments')
-  const imageForm = document.querySelector('#imageForm');
   const viewFragmentSection = document.querySelector('#viewFragmentSection')
-  const returnedData = document.querySelector('#returnedData')
   const getFragmentDataBtn = document.querySelector('#getFragmentDataBtn')
+  const deleteFragmentBtn = document.querySelector('#deleteFragmentBtn')
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -54,6 +53,14 @@ async function init() {
     document.getElementById("image").src = "";
     let id = document.querySelector('#fragmentId').value;
     getFragmentDataByID(user, id);
+  }
+
+
+  deleteFragmentBtn.onclick = () =>{
+    document.getElementById("returnedData").innerHTML = "";
+    document.getElementById("image").src = "";
+    let id = document.querySelector('#fragmentId').value;
+    deleteFragmentByID(user, id);
   }
 
   function displayUserFragments() {  

@@ -38,13 +38,20 @@
       <button type="submit" id="submitBtn">Submit</button> 
     </section>
     <section hidden id="viewFragmentSection">
-      <h2>View Fragment</h2>
+      <h2>View/Update/Delete Fragment</h2>
       <label for="viewFragment">Enter your fragment id :</label>
       <input type="text" id="fragmentId"> 
+      <label for="updateFragment">Enter the new fragment data (if updating data)</label>
+      <input type="text" id="updatedFragmentData">
+      <label for="updateFragmentImage">Select the new fragment image (if updating image data)</label>
+      <input type="file" name="image" id="updatedFragmentImage" accept="image/*">
+      <button type="submit" id="getFragmentDataBtn">Get Fragment Data</button>
+      <button type="submit" id="updateFragmentDataBtn">Update Fragment</button>
+      <button type="submit" id="updateFragmentImageDataBtn">Update Fragment Image</button>
+      <button type="submit" id="deleteFragmentBtn">Delete Fragment</button>
+      <p></p>
       <div id="returnedData"></div>
       <img id="image">
-      <br>
-      <button type="submit" id="getFragmentDataBtn">Get Fragment Data</button>
     </section>
   </body>
 </html>

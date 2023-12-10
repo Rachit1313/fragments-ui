@@ -85,3 +85,26 @@ export async function getFragmentDataByID(user, id) {
     console.log(`Unable to call GET /v1/fragments/${id}`, { err });
   }
 }
+
+export async function deleteFragmentByID(user, id){
+  try {
+    if (id != "") {
+      console.log(`Deleting user fragment data by ID...`);
+      const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+        headers: user.authorizationHeaders(),
+        method: 'DELETE'
+      });
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+      else{
+        document.getElementById("returnedData").textContent = "Fragment Deleted Successfully";
+      }
+    } else {
+      document.getElementById("returnedData").textContent = "Error: ID required";
+      console.log("Error: ID required");
+    }
+  } catch (err) {
+    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
+  }
+}
