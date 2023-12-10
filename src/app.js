@@ -1,7 +1,7 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments, postUserFragments, getFragmentDataByID, deleteFragmentByID } from './api';
+import { getUserFragments, postUserFragments, getFragmentDataByID, deleteFragmentByID, updateFragmentByID } from './api';
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
@@ -12,10 +12,12 @@ async function init() {
   const submitBtn = document.querySelector('#submitBtn');
   const errorMsg = document.querySelector('#errorMsg')
   const fragmentType = document.querySelector('#type');
+  const updateType = document.querySelector('#updateType')
   const existingFragmentsBox = document.querySelector('#existingFragments')
   const viewFragmentSection = document.querySelector('#viewFragmentSection')
   const getFragmentDataBtn = document.querySelector('#getFragmentDataBtn')
   const deleteFragmentBtn = document.querySelector('#deleteFragmentBtn')
+  const updateFragmentImageDataBtn = document.querySelector('#updateFragmentImageDataBtn')
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -61,6 +63,24 @@ async function init() {
     document.getElementById("image").src = "";
     let id = document.querySelector('#fragmentId').value;
     deleteFragmentByID(user, id);
+  }
+
+  updateFragmentDataBtn.onclick = () => {
+    document.getElementById("returnedData").innerHTML = "";
+    document.getElementById("image").src = "";
+    let id = document.querySelector('#fragmentId').value;
+    let newValue = document.querySelector('#updatedFragmentData').value;
+
+    updateFragmentByID(user,newValue,updateType.value,id)
+  }
+
+  updateFragmentImageDataBtn.onclick = () => {
+    document.getElementById("returnedData").innerHTML = "";
+    document.getElementById("image").src = "";
+    let id = document.querySelector('#fragmentId').value;
+    let newValue = document.querySelector('#updatedFragmentImage').files[0];
+
+    updateFragmentByID(user,newValue,updateType.value,id)
   }
 
   function displayUserFragments() {  

@@ -108,3 +108,27 @@ export async function deleteFragmentByID(user, id){
     console.log(`Unable to call GET /v1/fragments/${id}`, { err });
   }
 }
+
+export async function updateFragmentByID(user, newValue, type, id){
+  try{
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+      // Generate headers with the proper Authorization bearer token to pass
+      headers: {
+        ...user.authorizationHeaders(),
+        "Content-Type": type
+         },
+      method: 'PUT',
+      body: newValue
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    else{
+      document.getElementById("returnedData").textContent = "Fragment Updated Successfully";
+    }
+  }
+  catch (err){
+    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
+  }
+}
