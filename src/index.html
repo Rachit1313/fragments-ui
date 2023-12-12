@@ -39,7 +39,7 @@
     </section>
     <section hidden id="viewFragmentSection">
       <h2>View/Update/Delete Fragment</h2>
-      <label for="viewFragment">Enter your fragment id :</label>
+      <label for="fragmentId">Enter your fragment id :</label>
       <input type="text" id="fragmentId"> 
       <label for="updateType">Select your fragment type:</label>
       <select name="type" id="updateType"> 
@@ -63,6 +63,25 @@
       <p></p>
       <div id="returnedData"></div>
       <img id="image">
+    </section>
+    <section>
+      <h2>Get Converted Fragment Data</h2>
+      <label for="convertFragmentId">Enter your fragment id :</label>
+      <input type="text" id="convertFragmentId"> 
+      <p></p>
+      <select name="convertType" id="convertType"> 
+      <option value=".txt">.txt</option> 
+      <option value=".md">.md</option> 
+      <option value=".html">.html</option> 
+      <option value=".json">.json</option> 
+      <option value=".png">.png</option> 
+      <option value=".jpeg">.jpeg</option> 
+      <option value=".webp">.webp</option> 
+      <option value=".gif">.gif</option> 
+      </select>
+      <button type="submit" id="convertBtn">Convert</button> 
+      <div id="convertedFragmentdata"></div>
+      <img id="convertedFragmentImage">
     </section>
   </body>
 </html>

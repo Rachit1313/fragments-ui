@@ -4,7 +4,21 @@
 const apiUrl = process.env.API_URL || 'http://localhost:8080';
 
 /**
- * Given an authenticated user, request all fragments for this user from the
+ * Given an authenticated user  test('GET by ID existing image file', async () => {
+    const req = await request(app)
+      .post('/v1/fragments/')
+      .auth('user1@email.com', 'password1')
+      .set('Content-type', 'image/png')
+      .send(fs.readFileSync(`${__dirname}/test-files/ss.png`));
+    expect(req.status).toBe(201);
+
+    const res = await request(app)
+      .get(`/v1/fragments/${req.body.fragment.id}`)
+      .auth('user1@email.com', 'password1');
+    expect(res.type).toBe('image/png');
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual(Buffer.from(fs.readFileSync(`${__dirname}/test-files/ss.png`)));
+  });, request all fragments for this user from the
  * fragments microservice (currently only running locally). We expect a user
  * to have an `idToken` attached, so we can send that along with the request.
  */
@@ -129,6 +143,45 @@ export async function updateFragmentByID(user, newValue, type, id){
     }
   }
   catch (err){
+    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
+  }
+}
+
+export async function getConvertedFragmentData(user, id, ext) {
+  try {
+    if (id != "") {
+      console.log(`Requesting user fragment data by ID...`);
+      console.log(`Fetching ${apiUrl}/v1/fragments/${id}${ext}`);
+      const res = await fetch(`${apiUrl}/v1/fragments/${id}${ext}`, {
+        headers: user.authorizationHeaders(),
+      });
+
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+
+      const type = res.headers.get("Content-Type");
+      if (type.includes("text")) {
+        const data = await res.text();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        document.getElementById("convertedFragmentdata").innerHTML = data;
+      } else if (type.startsWith("image")) {
+        const data = await res.blob();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        var image = document.querySelector('convertedFragmentImage');
+        // see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+        var objectURL = URL.createObjectURL(data);
+        image.src = objectURL;
+      } else if (type.includes("json")) {
+        const data = await res.json();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        document.getElementById("convertedFragmentdata").innerHTML = data;
+      } 
+    } else {
+      document.getElementById("convertedFragmentdata").textContent = "Error: ID required";
+      console.log("Error: ID required");
+    }
+  } catch (err) {
     console.log(`Unable to call GET /v1/fragments/${id}`, { err });
   }
 }

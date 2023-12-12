@@ -1,7 +1,7 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments, postUserFragments, getFragmentDataByID, deleteFragmentByID, updateFragmentByID } from './api';
+import { getUserFragments, postUserFragments, getFragmentDataByID, deleteFragmentByID, updateFragmentByID, getConvertedFragmentData} from './api';
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
@@ -10,6 +10,7 @@ async function init() {
   const logoutBtn = document.querySelector('#logout');
   const newFragmentBox = document.querySelector('#newFragmentBox');
   const submitBtn = document.querySelector('#submitBtn');
+  const convertBtn = document.querySelector('#convertBtn')
   const errorMsg = document.querySelector('#errorMsg')
   const fragmentType = document.querySelector('#type');
   const updateType = document.querySelector('#updateType')
@@ -47,8 +48,19 @@ async function init() {
     console.log("posting image frag")
     let data = document.getElementById("fileInput").files[0];
     postUserFragments(user,data,fragmentType.value)
+    displayUserFragments();
   }
   };
+
+
+  convertBtn.onclick = () => {
+    document.getElementById("convertedFragmentdata").innerHTML = "";
+    document.getElementById("convertedFragmentImage").src = "";
+    let id = document.querySelector('#convertFragmentId').value;
+    let ext = document.querySelector('#convertType').value;
+
+    getConvertedFragmentData(user,id,ext)
+  }
 
   getFragmentDataBtn.onclick = () =>{
     document.getElementById("returnedData").innerHTML = "";
