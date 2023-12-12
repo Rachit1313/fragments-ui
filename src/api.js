@@ -168,7 +168,7 @@ export async function getConvertedFragmentData(user, id, ext) {
       } else if (type.startsWith("image")) {
         const data = await res.blob();
         console.log(`Received user fragment by ID: ${id}`, { data });
-        var image = document.querySelector('convertedFragmentImage');
+        var image = document.querySelector('#convertedFragmentImage');
         // see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
         var objectURL = URL.createObjectURL(data);
         image.src = objectURL;
